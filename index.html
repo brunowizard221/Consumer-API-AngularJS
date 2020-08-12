@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="meuModulo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body ng-controller="indexController">
+    <header class="container">
+        <div class="row">
+            <h2 ng-bind="titulo"></h2>
+        </div>
+    </header>
+    <main class="container">
+        <div class="row">
+            <input type="text" ng-model="busca" placeholder="search name">
+
+        </div>
+        <div class="row">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Email:</th>
+                        <th>Phone:</th>
+                        <th>Action:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="contact in contacts | filter:busca">
+                        <td>{{contact.name}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.phone}}</td>
+                        <td>
+                            <button ng-click="editContact(contact)" data-target="modal1" class="btn blue">Edit</button>
+                            <button ng-click="deleteContact(contact)" data-target="modal1"
+                                class="btn red">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <!-- Modal Trigger -->
+            <a ng-click="openAddContact()" class="waves-effect waves-light btn">Add</a>
+        </div>
+    </main>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4 ng-if="!editing">Add contact</h4>
+            <h4 ng-if="editing">Edit contact</h4>
+            <p>Fill in the fields below.</p>
+            <div class="row">
+                <div class="input-field col m6 s6">
+                    <input type="text" ng-model="contact.name" class="validate" placeholder="Name">
+                </div>
+                <div class="input-field col m6 s6">
+                    <input type="text" ng-model="contact.email" class="validate" placeholder="Email">
+                </div>
+                <div class="input-field col m4 s12">
+                    <input type="text" ng-model="contact.phone" class="validate" placeholder="Phone">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a ng-if="!editing" ng-click="addContact(contact)" class="waves-effect waves-light btn blue"
+                href="#modal1">Add</a>
+            <a ng-if="editing" ng-click="saveContact(contact)" class="waves-effect waves-light btn blue"
+                href="#modal1">Save</a>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="js/materalize/init.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/controllers.js"></script>
+</body>
+
+</html>
