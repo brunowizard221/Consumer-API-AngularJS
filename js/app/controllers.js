@@ -1,11 +1,13 @@
 var app = angular.module("meuModulo", []);
 app.controller("indexController", function ($scope, $http) {
-    var url = "https://tranquil-waters-16323.herokuapp.com/contacts";
+    var url = "https://tranquil-waters-16323.herokuapp.com/contacts/";
     $scope.editing = false;
 
     $scope.loadContact = function () {
         $http.get(url).success(function (response) {
             $scope.contacts = response;
+        }).error(function (){
+            console.log("Erro na requisição");
         });
     }
 
@@ -16,9 +18,8 @@ app.controller("indexController", function ($scope, $http) {
     }
 
     $scope.addContact = function (contact) {
-        $http.post("https://tranquil-waters-16323.herokuapp.com/contacts/", contact).then($scope.loadContact);
+        $http.post(url, contact).then($scope.loadContact);
         $('#modal1').closeModal();
-        limpaform();
     }
 
     $scope.editContact = function (contact) {
@@ -29,11 +30,11 @@ app.controller("indexController", function ($scope, $http) {
     }
 
     $scope.saveContact = function (contact) {
-        $http.put(`https://tranquil-waters-16323.herokuapp.com/contacts/${contact.id}`, contact).then($scope.loadContact);
+        $http.put(url + contact.id, contact).then($scope.loadContact);
         $('#modal1').closeModal();
     }
 
-    $scope.deleteContact = function (contact, i) {
+    $scope.deleteContact = function (contact) {
         // for(var index in $scope.contacts){
         //     var aux = $scope.contacts[index];
         //     if(question === aux){
@@ -41,7 +42,7 @@ app.controller("indexController", function ($scope, $http) {
         //     }
         // }
 
-        $http.delete(`https://tranquil-waters-16323.herokuapp.com/contacts/${contact.id}`).then(function (response) {
+        $http.delete(url + contact.id).then(function (response) {
             $scope.loadContact();
          // $scope.contacts.splice(i, 1);
         });
