@@ -17,7 +17,6 @@
     <main class="container">
         <div class="row">
             <input type="text" ng-model="busca" placeholder="search name">
-
         </div>
         <div class="row">
             <table class="striped">
@@ -35,9 +34,8 @@
                         <td>{{contact.email}}</td>
                         <td>{{contact.phone}}</td>
                         <td>
-                            <button ng-click="editContact(contact)" data-target="modal1" class="btn blue">Edit</button>
-                            <button ng-click="deleteContact(contact)" data-target="modal1"
-                                class="btn red">Delete</button>
+                            <button ng-click="editContact(contact)" data-target="modal1" class="waves-effect blue btn">Edit</button>
+                            <button ng-click="deleteContact(contact)" data-target="modal1" class="waves-effect red btn">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -50,27 +48,27 @@
     </main>
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" ng-form="form">
             <h4 ng-if="!editing">Add contact</h4>
             <h4 ng-if="editing">Edit contact</h4>
             <p>Fill in the fields below.</p>
             <div class="row">
                 <div class="input-field col m6 s6">
-                    <input type="text" ng-model="contact.name" class="validate" placeholder="Name">
+                    <input type="text" ng-model="contact.name" class="validate" placeholder="Name" pattern="[a-zA-Z]+" required>
                 </div>
                 <div class="input-field col m6 s6">
-                    <input type="text" ng-model="contact.email" class="validate" placeholder="Email">
+                    <input type="email" ng-model="contact.email" class="validate" placeholder="Email" required>
                 </div>
                 <div class="input-field col m4 s12">
-                    <input type="text" ng-model="contact.phone" class="validate" placeholder="Phone">
+                    <input type="tel" ng-model="contact.phone" class="validate" placeholder="Phone" pattern="[0-9]{8}" required>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            <a ng-if="!editing" ng-click="addContact(contact)" class="waves-effect waves-light btn blue"
+            <a ng-if="!editing" ng-disabled="form.$invalid" ng-click="addContact(contact)" class="waves-effect waves-light btn blue"
                 href="#modal1">Add</a>
-            <a ng-if="editing" ng-click="saveContact(contact)" class="waves-effect waves-light btn blue"
+            <a ng-if="editing" ng-disabled="form.$invalid"  ng-click="saveContact(contact)" class="waves-effect waves-light btn blue"
                 href="#modal1">Save</a>
         </div>
     </div>
